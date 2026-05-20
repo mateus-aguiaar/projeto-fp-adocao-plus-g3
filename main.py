@@ -1,4 +1,4 @@
-import menus.menu_principal as ui
+import src.menus as ui
 import os
 os.system("cls")
 
