@@ -8,6 +8,8 @@ while True:
         ui.cadastro_animal(escolha)
     elif escolha == 2:
         ui.verificar_animal(escolha)
+    elif escolha == 3:
+        ui.atualizar_animal(escolha)
     opcao = int(input(ui.MENU_SAIDA))
     if opcao == 1:
         os.system("cls")
