@@ -26,12 +26,16 @@ def cadastro_animal(escolha):
     if escolha == 1:
         while True:
             cpf_dono = input("\nInforme o seu CPF, nesse padrão 356.314.567-80: ")
-            if len(cpf_dono) != 11:
+            cpf_limpo = cpf_dono.replace(".","").replace("-","")
+            if not cpf_limpo.isdigit():
+                print("Digite apenas números")
+                continue
+            if len(cpf_limpo) != 11:
                 print("CPF incompleto.")
                 continue
             else:
                 break
-        cpf_formatado = cpf_dono[0:3] + "." + cpf_dono[3:6] + "." + cpf_dono[6:9] + "-" + cpf_dono[9:12]
+        cpf_formatado = cpf_limpo[0:3] + "." + cpf_limpo[3:6] + "." + cpf_limpo[6:9] + "-" + cpf_limpo[9:12]
         nome_do_animal = input("\nInforme o nome do seu animal: ").lower()
         raca_do_animal = input("\nInforme a raça do seu animal: ")
         idade_do_animal = int(input("\nInforme a idade do seu animal: "))
@@ -64,19 +68,24 @@ def verificar_animal(escolha):
         try:
             with open("data/animais.csv", "r", newline = "", encoding = "utf-8") as arquivo:
                 reader = csv.reader(arquivo)
-                nome_verificacao = input("\nQual o nome do animal: ").lower()
                 while True:
                     cpf_cadastro = input("\nQual o seu CPF: ")
-                    if len(cpf_cadastro) != 11:
+                    cpf_limpo_verificacao = cpf_cadastro.replace(".","").replace("-","")
+                    if not cpf_limpo_verificacao.isdigit():
+                        print("\nDigite apenas números.")
+                        continue
+                    if len(cpf_limpo_verificacao) != 11:
                         print("\nCPF incompleto.")
                         continue
                     else:
                         break
-                cpf_cadastro_formatado = cpf_cadastro[0:3] + "." + cpf_cadastro[3:6] + "." + cpf_cadastro[6:9] + "-" + cpf_cadastro[9:12]
+                cpf_cadastro_formatado = cpf_limpo_verificacao[0:3] + "." + cpf_limpo_verificacao[3:6] + "." + cpf_limpo_verificacao[6:9] + "-" + cpf_limpo_verificacao[9:12]
                 animal_encontrado = False
+                nome_verificacao = input("\nQual o nome do animal: ").lower()
                 for linha in reader:
                     if cpf_cadastro_formatado == linha[0] and nome_verificacao == linha[1]:
                         animal_encontrado = True
+                        os.system("cls")
                         print(f"\nNome: {linha[1]}")
                         print(f"\nRaça: {linha[2]}")
                         print(f"\nIdade: {linha[3]} anos.")
@@ -99,4 +108,3 @@ def verificar_animal(escolha):
             else:
                 if cpf_atualizar in arquivo:
                     nome_do_animal = input("Informe o nome do seu animal: ")"""
-
