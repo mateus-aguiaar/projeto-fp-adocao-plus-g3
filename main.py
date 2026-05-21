@@ -1,13 +1,16 @@
 import src.menus as ui
+import src.funcoes as fn
 import os
 os.system("cls")
 
 while True:
     escolha = int(input(ui.MENU_PRINCIPAL))
     if escolha == 1:
-        ui.cadastro_animal(escolha)
+        fn.cadastro_animal(escolha)
     elif escolha == 2:
-        ui.verificar_animal(escolha)
+        fn.verificar_animal(escolha)
+    elif escolha == 3:
+        fn.atualizar_animal(escolha)
     elif escolha == 3:
         ui.atualizar_animal(escolha)
     opcao = int(input(ui.MENU_SAIDA))
