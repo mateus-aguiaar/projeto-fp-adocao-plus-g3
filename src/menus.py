@@ -96,15 +96,23 @@ def verificar_animal(escolha):
                     print("\n\033[1;31mAnimal não encontrado!\033[m")
         except FileNotFoundError:
             print("\033[1;31mNenhum animal cadastrado\033[m")
-"""def atualizar_animal (escolha):
+def atualizar_animal (escolha):
     if escolha == 3:
         with open ("data/animais.csv", "r", newline = "", encoding = "utf-8" ) as arquivo:
-            leitor = csv.reader(arquivo)
-        cpf_atualizar = input("Digite o seu CPF: ")
-        while True:
-            if len(cpf_atualizar) != 11:
-                print("CPF incompleto.")
-                continue
-            else:
-                if cpf_atualizar in arquivo:
-                    nome_do_animal = input("Informe o nome do seu animal: ")"""
+            reader = csv.reader(arquivo)
+
+            while True:
+                cpf_dono = input("\nInforme o seu CPF, nesse padrão 356.314.567-80: ")
+                cpf_limpo = cpf_dono.replace(".", "").replace("-", "")
+
+                if cpf_limpo.isdigit() == False:
+                    print("CPF Inválido, digite apenas números.")
+
+                else:
+                    if len(cpf_limpo) != 11:
+                        print("CPF incompleto.")
+
+                    else:
+                        cpf_formatado = cpf_limpo[0:3] + "." + cpf_limpo[3:6] + "." + cpf_limpo[6:9] + "-" + cpf_limpo[9:12]
+                        print(cpf_formatado)
+                        
