@@ -1,3 +1,1 @@
-cpf,nome,raca,idade,estado_saude,comportamento,data_chegada
-702.464.094-44,theo,Maltês,10,Bem,"Late muito, agitado.",2026-05-20
-715.298.754-80,bambam,Golden,5,Ótimo estado,Agitado,2026-05-21
+id_animal,nome,raca,idade,estado_saude,comportamento,data_chegada

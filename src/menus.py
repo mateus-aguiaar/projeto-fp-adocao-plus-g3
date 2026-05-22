@@ -1,5 +1,3 @@
-# Criar um menu na qual vamos escolher, adicionar, vizualizar, atualizar e deletar.
-
 MENU_PRINCIPAL = """
 [1] Adicionar animais
 [2] Verificar animais
@@ -19,3 +17,8 @@ MENU_SAIDA = """
 [2] sair
 
 Qual opção você deseja: """
+
+MENU_ESCOLHA_ANIMAL = """
+Para escolher o animal desejado escolha o valor dele!
+
+Informe o valor do animal: """

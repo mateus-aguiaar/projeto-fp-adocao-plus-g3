@@ -11,8 +11,6 @@ while True:
         fn.verificar_animal(escolha)
     elif escolha == 3:
         fn.atualizar_animal(escolha)
-    elif escolha == 3:
-        ui.atualizar_animal(escolha)
     opcao = int(input(ui.MENU_SAIDA))
     if opcao == 1:
         os.system("cls")
