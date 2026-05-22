@@ -14,22 +14,24 @@ def cadastro_animal(escolha):
         while True:
             chegada_animal = int(input(ui.MENU_DATA_CHEGADA))
             if chegada_animal == 1:
-                data_chegada = date.today()
-                data_id = datetime.now().strftime("%d%m%Y%H%M%S")
-                id_animal = data_id.replace("/","")
+                data_hoje = date.today()
+                data_chegada = data_hoje.strftime("%Y-%m-%d")
+                id_animal = datetime.now().strftime("%d%m%Y%H%M%S")
                 break
 
             elif chegada_animal == 2:
                 while True:
                     data_final = input("Digite a data (DD/MM/AAAA): ")
-                    data_chegada = data_final.replace("/","-")
                     id_animal = data_final.replace("/","")
-
                     if not id_animal.isdigit() or len(id_animal) != 8:
                         print("\nData inválida.")
-                        continue    
+                        continue
+                    dia,mes,ano = data_final.split("/")
+                    data_chegada = f"{ano}-{mes}-{dia}"
+                    id_animal = datetime.now().strftime("%d%m%Y%H%M%S")
                     break
                 break
+
             else:
                 os.system("cls")
                 print("\033[1;31mOpção inválida\033[m") 
@@ -66,7 +68,6 @@ def verificar_animal(escolha):
 
                     elif len(animais_encontrados) == 1:
                             linha = animais_encontrados[0]
-                            print(f"{'Campo':<20} {'Valor'}")
                             print("-" * 30)
                             print(f"{'Nome':<20} {linha[1]}")
                             print(f"{'Raça':<20} {linha[2]}")
@@ -87,7 +88,6 @@ def verificar_animal(escolha):
                         else:   
                             linha = animais_encontrados[selecao_animal - 1] 
                             os.system("cls")
-                            print(f"{'Campo':<20} {'Valor'}")
                             print("-" * 30)
                             print(f"{'Nome':<20} {linha[1]}")
                             print(f"{'Raça':<20} {linha[2]}")
@@ -120,4 +120,3 @@ def atualizar_animal (escolha):
                     else:
                         cpf_formatado = cpf_limpo[0:3] + "." + cpf_limpo[3:6] + "." + cpf_limpo[6:9] + "-" + cpf_limpo[9:12]
                         print(cpf_formatado)
-                        z
