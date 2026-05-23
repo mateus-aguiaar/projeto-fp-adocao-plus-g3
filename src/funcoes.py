@@ -124,22 +124,88 @@ def verificar_animal(escolha):
         except FileNotFoundError:
             print("\033[1;31mNenhum animal cadastrado\033[m")
 
-def atualizar_animal (escolha):
+def editar_info(animal_escolhido):
+    while True:
+        print(f"\nInformações de {animal_escolhido[1]}:")
+        print(f"\n[1] Nome: {animal_escolhido[1]}")
+        print(f"[2] Raça: {animal_escolhido[2]}")
+        print(f"[3] Idade: {animal_escolhido[3]}")
+        print(f"[4] Estado de saúde: {animal_escolhido[4]}")
+        print(f"[5] Comportamento: {animal_escolhido[5]}")
+        print(f"[6] Data de chegada: {animal_escolhido[6]}")
+
+        info_quer_editar = int(input("---> Quero editar: "))
+
+        
+        if info_quer_editar == 1:
+            print(f"\nNome atual: {animal_escolhido[1]}")
+            novo_nome = input("Novo nome: ")
+            animal_escolhido[1] = novo_nome
+        elif info_quer_editar == 2:
+            print(f"\nRaça atual: {animal_escolhido[2]}")
+            nova_raca = input("Nova raça: ")
+            animal_escolhido[2] = nova_raca
+        elif info_quer_editar == 3:
+            print(f"\nIdade atual: {animal_escolhido[3]}")
+            nova_idade = input("Nova idade: ")
+            animal_escolhido[3] = nova_idade
+        elif info_quer_editar == 4:
+            print(f"\nEstado de saúde atual: {animal_escolhido[4]}")
+            novo_estado_de_saude = input("Novo estado de saúde: ")
+            animal_escolhido[4] = novo_estado_de_saude
+        elif info_quer_editar == 5:
+            print(f"\nComportamento atual: {animal_escolhido[5]}")
+            novo_comportamento = input("Novo comportamento: ")
+            animal_escolhido[5] = novo_comportamento
+        elif info_quer_editar == 6:
+            print(f"\nData de chegada atual: {animal_escolhido[6]}")
+            nova_data_de_chegada = input("Nova data de chegada: ")
+            animal_escolhido[6] = nova_data_de_chegada
+
+        print("\n[1] Sim\n[2] Não\nVocê deseja editar mais alguma coisa?")
+        escolha_quero_editar_mais = int(input("---> 1 ou 2: "))
+
+        if escolha_quero_editar_mais == 1:
+            continue
+        elif escolha_quero_editar_mais == 2:
+            break
+
+def atualizar_animal(escolha):
     if escolha == 3:
-        with open ("data/animais.csv", "r", newline = "", encoding = "utf-8" ) as arquivo:
+        nome_verificacao = input("\nNome do animal: ")
+
+        with open ("data/animais.csv", "r", newline="", encoding="utf-8") as arquivo:
             reader = csv.reader(arquivo)
 
-            while True:
-                cpf_dono = input("\nInforme o seu CPF, nesse padrão 356.314.567-80: ")
-                cpf_limpo = cpf_dono.replace(".", "").replace("-", "")
+            animais_nome_verificacao = []
 
-                if cpf_limpo.isdigit() == False:
-                    print("CPF Inválido, digite apenas números.")
+            todas_linhas = []
 
-                else:
-                    if len(cpf_limpo) != 11:
-                        print("CPF incompleto.")
+            for linha in reader:
+                todas_linhas.append(linha)
+
+                if nome_verificacao == linha[1]:
+                    animais_nome_verificacao.append([linha[0], nome_verificacao,
+                                                     linha[2], linha[3], linha[4],
+                                                      linha[5], linha[6] ])
+                    animal_escolhido = linha
+                    
+            if len(animais_nome_verificacao) != 1:
+                for i in range(len(animais_nome_verificacao)):
+                    print(f"[{i+1}] " + " | ".join(animais_nome_verificacao[i]))
+                escolha_mesmo_nome = int(input("---> Escolha: "))
+                animal_escolhido = animais_nome_verificacao[escolha_mesmo_nome - 1]
+                editar_info(animal_escolhido)
+
+            else:
+                editar_info(animal_escolhido)  
+
+            with open ("data/animais.csv", "w", newline="", encoding="utf-8") as arquivo:
+                writer = csv.writer(arquivo)
+
+                for i in range(len(todas_linhas)):
+                    if todas_linhas[i][0] == animal_escolhido[0]:
+                        writer.writerow(animal_escolhido)
 
                     else:
-                        cpf_formatado = cpf_limpo[0:3] + "." + cpf_limpo[3:6] + "." + cpf_limpo[6:9] + "-" + cpf_limpo[9:12]
-                        print(cpf_formatado)
+                        writer.writerow(todas_linhas[i])
