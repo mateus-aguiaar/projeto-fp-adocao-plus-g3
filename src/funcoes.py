@@ -2,9 +2,11 @@ import src.menus as ui
 from datetime import datetime,date
 import csv
 import os 
+import random
 
 def cadastro_animal(escolha):
     if escolha == 1:      
+        os.system("cls")
         nome_animal = input("\nInforme o nome do seu animal: ").lower().capitalize()
         raca_animal = input("\nInforme a raça do seu animal: ")
         idade_animal = int(input("\nInforme a idade do seu animal: "))
@@ -51,16 +53,19 @@ def cadastro_animal(escolha):
 
 def verificar_animal(escolha):
     if escolha == 2:
+        os.system("cls")
         try:
             with open("data/animais.csv", "r", newline = "", encoding = "utf-8") as arquivo:
                 reader = csv.reader(arquivo)
-
+                
                 nome_verificacao = input("\nQual o nome do animal: ").lower().capitalize()
                 os.system("cls")
                 animais_encontrados = []
+
                 for linha in reader:
                     if nome_verificacao == linha[1]:
                         animais_encontrados.append(linha)
+
                 while True:
                     if len(animais_encontrados) == 0:
                             print("Nenhum animal foi encontrado!")
@@ -68,38 +73,127 @@ def verificar_animal(escolha):
 
                     elif len(animais_encontrados) == 1:
                             linha = animais_encontrados[0]
-                            print("-" * 30)
+                            animal_selecionado = linha
+                            print("-" * 50)
                             print(f"{'Nome':<20} {linha[1]}")
                             print(f"{'Raça':<20} {linha[2]}")
                             print(f"{'Idade':<20} {linha[3]} anos")
                             print(f"{'Estado de saúde':<20} {linha[4]}")
                             print(f"{'Comportamento':<20} {linha[5]}")
-                            print(f"{'Data de chegada':<20} {linha[6]}")
-                            break
+                            ano,mes,dia = animal_selecionado[6].split("-")
+                            print(f"{'Data de chegada':<20} {dia}/{mes}/{ano}")
+                        
                     else:
                         print("\nMais de um animal com o mesmo nome:\n")
                         for i, animal in enumerate(animais_encontrados):
-                            print(f"[{i+1}] {animal}")
-                    try:
-                        selecao_animal = int(input(ui.MENU_ESCOLHA_ANIMAL))
-                        if selecao_animal < 1 or selecao_animal > len(animais_encontrados):
-                            print("\nOpção inválida")   
-                            continue
-                        else:   
-                            linha = animais_encontrados[selecao_animal - 1] 
-                            os.system("cls")
-                            print("-" * 30)
-                            print(f"{'Nome':<20} {linha[1]}")
-                            print(f"{'Raça':<20} {linha[2]}")
-                            print(f"{'Idade':<20} {linha[3]} anos")
-                            print(f"{'Estado de saúde':<20} {linha[4]}")
-                            print(f"{'Comportamento':<20} {linha[5]}")
-                            print(f"{'Data de chegada':<20} {linha[6]}")
+                            print(f"[{i+1}] Nome: {animal[1]} | Raça: {animal[2]} | Comportamento: {animal[5]}")
+
+                        try:
+                            selecao_animal = int(input(ui.MENU_ESCOLHA_ANIMAL))
+                            if selecao_animal < 1 or selecao_animal > len(animais_encontrados):
+                                print("\nOpção inválida")   
+                                continue
+                            else:   
+                                linha = animais_encontrados[selecao_animal - 1] 
+                                animal_selecionado = linha
+                                os.system("cls")
+                                print("-" * 30)
+                                print(f"{'Nome':<20} {linha[1]}")
+                                print(f"{'Raça':<20} {linha[2]}")
+                                print(f"{'Idade':<20} {linha[3]} anos")
+                                print(f"{'Estado de saúde':<20} {linha[4]}")
+                                print(f"{'Comportamento':<20} {linha[5]}")
+                                ano,mes,dia = animal_selecionado[6].split("-")
+                                print(f"{'Data de chegada':<20} {dia}/{mes}/{ano}")
+                        except ValueError as e:
+                            print(f"ERRO: {e}")
+                            print("\nDigite um número válido.")
+
+                        except ValueError:
+                            print("\nDigite um número válido.")
+                    
+                    funcionarios = ["Mateus Davi","Lucas Calixto","João Vitor","Maria Giulia", "Jullya Medeiros"]
+                    gerenciar_animal = int(input(ui.MENU_GERENCIAR_ANIMAL))
+
+                    if gerenciar_animal == 1:
+                        if not os.path.exists("data/agendamentos.csv"):
+                            with open("data/agendamentos.csv", "w", newline="", encoding="utf-8") as arquivo:
+                                writer = csv.writer(arquivo)
+                                writer.writerow(["id_animal", "nome_animal", "tarefa", "data", "responsavel"])
+                        try:
+                            with open("data/agendamentos.csv", "r", newline = "", encoding = "utf-8") as arquivo:
+                                reader = csv.reader(arquivo)
+                                next(reader)
+                                agendamentos_encontrados = []
+                                
+                                for agendamentos in reader:
+                                    if agendamentos[0] == animal_selecionado[0]:
+                                        agendamentos_encontrados.append(agendamentos)
+                                if agendamentos_encontrados:
+                                    os.system("cls")
+                                    for ag in agendamentos_encontrados:
+                                        print(f"\nTarefa: {ag[2]} | Data: {ag[3]} | Responsável: {ag[4]}")
+                                    print("-" * 40)
+                                    print(f"{'Nome':<20} {animal_selecionado[1]}")
+                                    print(f"{'Raça':<20} {animal_selecionado[2]}")
+                                    print(f"{'Idade':<20} {animal_selecionado[3]} anos")
+                                    print(f"{'Estado de saúde':<20} {animal_selecionado[4]}")
+                                    print(f"{'Comportamento':<20} {animal_selecionado[5]}")
+                                    ano,mes,dia = animal_selecionado[6].split("-")
+                                    print(f"{'Data de chegada':<20} {dia}/{mes}/{ano}")
+                                    break   
+                                else:
+                                    os.system("cls")
+                                    print("Nenhum agendamento foi encontrado.")
+                        except ValueError as e:
+                                print(f"ERRO2: {e}")
+                                print("Digite um valor válido.")      
+                        except StopIteration:
+                            pass
+                        except ValueError:
+                            print("Digite um valor válido.")
+
+                    elif gerenciar_animal == 2:
+                        animal_tarefa = animal_selecionado[1]
+                        id_tarefa = animal_selecionado[0]
+                        os.system("cls")
+                        menu_tarefa = int(input(ui.MENU_OPCOES_AGENDAMENTOS))
+                        if menu_tarefa == 1:
+                            tarefa = "Vacina"
+
+                        elif menu_tarefa == 2:
+                            tarefa = "Banho"
+
+                        elif menu_tarefa == 3:
+                            tarefa = "Consulta veterinária"
+
+                        elif menu_tarefa == 4:
+                            tarefa = "Treino"
+                        while True:
+                            data_verificacao = input("\nQual data você deseja, dia/mês/ano: ")
+                            data_tarefa = data_verificacao.replace("/","")
+                            if data_tarefa.isdigit() and len(data_tarefa) == 8:
+                                data_final = data_tarefa[0:2] + "/"+ data_tarefa[2:4] + "/" + data_tarefa[4:6]
+                                break
+
+                            else:
+                                print("\nA data deve seguir o padrão indicado: dia/mês/ano (ex: 25/05/26)")
+
+                        sorteado = random.choice(funcionarios)
+                        responsavel_tarefa = sorteado
+                        print(f"\nO funcionário responsável pela tarefa é {responsavel_tarefa}.")
+                        
+                        with open("data/agendamentos.csv", "a", newline = "", encoding = "utf-8") as arquivo:
+                            writer = csv.writer(arquivo)
+                            writer.writerow([id_tarefa,animal_tarefa,tarefa,data_final,responsavel_tarefa])
                             break
-                    except ValueError:
-                        print("\nDigite um número válido.")
+                    else:
+                        os.system("cls")
+                        break
+
         except FileNotFoundError:
-            print("\033[1;31mNenhum animal cadastrado\033[m")
+            os.system("cls")
+            print("\n\033[1;31mNenhum animal cadastrado\033[m")
 
 def editar_info(animal_escolhido):
     while True:
