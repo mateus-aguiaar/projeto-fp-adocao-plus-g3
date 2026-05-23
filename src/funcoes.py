@@ -6,12 +6,21 @@ import random
 
 def cadastro_animal(escolha):
     if escolha == 1:      
-        os.system("cls")
-        nome_animal = input("\nInforme o nome do seu animal: ").lower().capitalize()
-        raca_animal = input("\nInforme a raça do seu animal: ")
-        idade_animal = int(input("\nInforme a idade do seu animal: "))
-        estado_saude_animal = input("\nInforme o estado de saúde do seu animal: ")
-        comportamento_animal = (input("\nInforme como o seu animal se comporta: "))
+        nome_animal = input("\nDigite o nome do animal: ").capitalize()
+        especie_animal = input("\nDigite a especie do animal: ").lower()
+        raca_animal = input("\nDigite a raça do animal: ").lower
+        idade_animal = int(input("\nDigite a idade do animal: "))
+        estado_saude_animal = input("\nInforme o estado de saúde do animal: ")
+        opcao = (input(ui.MENU_COMPORTAMENTO))
+
+        if opcao == "1":
+            comportamento_animal = "Agitado"
+        elif opcao == "2":
+            comportamento_animal = "Calmo"
+        elif opcao == "3":
+            comportamento_animal = "Neutro"
+        elif opcao == "4":
+            comportamento_animal = "Medroso"
         
         while True:
             chegada_animal = int(input(ui.MENU_DATA_CHEGADA))
@@ -43,7 +52,7 @@ def cadastro_animal(escolha):
                 writer = csv.writer(arquivo)
                 if not arquivo_existe:
                     writer.writerow(["id_animal", "nome", "raca", "idade", "estado_saude", "comportamento", "data_chegada"])
-                writer.writerow([id_animal, nome_animal, raca_animal, idade_animal,estado_saude_animal,comportamento_animal,data_chegada])
+                writer.writerow([id_animal, nome_animal, especie_animal, raca_animal, idade_animal,estado_saude_animal,comportamento_animal,data_chegada])
                 print("\n\033[1;32mCadastro realizado com sucesso!\033[m")
         
         except ValueError:
@@ -280,3 +289,218 @@ def atualizar_animal(escolha):
 
                     else:
                         writer.writerow(todas_linhas[i])
+
+def escolha_especie_animal(escolha):
+    
+    if escolha == "1":
+        especie = "cachorro"
+    elif escolha == "2":
+        especie = "gato"
+    elif escolha == "3":
+        especie = "pássaro"
+    elif escolha == "4":
+        especie = "reptil"
+    
+    return especie
+
+def verificar_especie(escolha):
+    
+    especie = escolha_especie_animal(escolha)
+
+    especies_encontradas = []
+
+    with open("data/animais.csv", "r", encoding="utf-8") as arquivo:
+        reader = csv.reader(arquivo)
+
+        for linha in reader:
+            if linha[2] == especie and linha[5] != "mal":
+                especies_encontradas.append(linha)
+
+    if len(especies_encontradas) == 0:
+        print("\nInfelizmente não temos nenhum animal dessa especie no momento!")
+        
+        return False
+    
+    else:
+        os.system("cls")
+        return especies_encontradas
+
+def verificar_raca(animais, pergunta):
+    os.system("cls")
+
+    if pergunta == "1":
+        cont = 1
+
+        for animal in animais:
+            print(f"[{cont}] ", animal[3])
+            cont += 1
+        
+        raca = input("\nDigite a raça do animal desejada (digite N para nenhuma): ").strip().lower()
+
+        if raca != "n":
+            racas_encontradas = []
+
+            for animal in animais:
+                if animal[3] == raca:
+                    racas_encontradas.append(animal)
+        
+            return racas_encontradas
+
+        else:
+            print("\nInfelizmente não temos mais raças disponíveis no momento!")
+            return False
+    else:
+        return animais
+
+def verificar_idade(animais, pergunta):
+    os.system("cls")
+
+    if pergunta == "1":
+        idade_min = int(input("\nDigite a idade mínima do animal (digite -1 para sem idade mínima): "))
+        idade_max = int(input("\nDigite a idade máxima do animal (digite -1 para sem idade máxima): "))
+
+        if idade_min == -1 and idade_max == -1:
+            os.system("cls")
+            return animais
+        
+        elif idade_min == -1:
+            idades_encontradas = []
+
+            for animal in animais:
+                if int(animal[4]) <= idade_max:
+                    idades_encontradas.append(animal)
+
+            if len(idades_encontradas) == 0:
+                print("\nInfelizmente não temos nenhum animal nessa faixa de idade no momento!")
+                return False
+            
+            else:
+                os.system("cls")
+                return idades_encontradas
+
+        elif idade_max == -1:
+            idades_encontradas = []
+
+            for animal in animais:
+                if int(animal[4]) >= idade_min:
+                    idades_encontradas.append(animal)
+
+            if len(idades_encontradas) == 0:
+                print("\nInfelizmente não temos nenhum animal nessa faixa de idade no momento!")
+                return False
+
+            else:
+                os.system("cls")
+                return idades_encontradas
+
+        else:
+            idades_encontradas = []
+
+            for animal in animais:
+                if int(animal[4]) >= idade_min and int(animal[4]) <= idade_max:
+                    idades_encontradas.append(animal)
+
+            if len(idades_encontradas) == 0:
+                print("\nInfelizmente não temos nenhum animal nessa faixa de idade no momento!")
+                return False
+
+            else:
+                os.system("cls")
+                return idades_encontradas
+
+    else:
+        return animais
+
+def verificar_comportamento(animais, pergunta):
+    os.system("cls")
+
+    if pergunta == "1":
+        animais_encontrados = []
+        
+        for animal in animais:
+            if animal[6] == "agitado":
+                animais_encontrados.append(animal)
+
+        if len(animais_encontrados) == 0:
+            print("\nInfelizmente não temos nenhum animal com essas características no momento!")
+            return False
+
+        elif len(animais_encontrados) == 1:
+            print("\nEncontramos um animal que combina com as características informadas!")
+            print(f"\n\tNome: {animais[0][1]} \t\tID:{animais[0][0]}")                    
+            return animais_encontrados
+        
+        else:
+            print("\nEncontramos animais que combinam com as características informadas!")
+
+            for animal in animais_encontrados:
+                print(f"\n\tNome: {animais[0][1]} \t\tID:{animais[0][0]}")
+
+            return animais_encontrados
+    
+    elif pergunta == "2":
+        animais_encontrados = []
+        
+        for animal in animais:
+            if animal[6] == "calmo":
+                animais_encontrados.append(animal)
+
+        if len(animais_encontrados) == 0:
+            print("\nInfelizmente não temos nenhum animal com essas características no momento!")
+            return False
+
+        elif len(animais_encontrados) == 1:
+            print("\nEncontramos um animal que combina com as características informadas!")
+            print(f"\n\tNome: {animais[0][1]} \t\tID:{animais[0][0]}")                    
+            return animais_encontrados
+        
+        else:
+            print("\nEncontramos animais que combinam com as características informadas!")
+
+            for animal in animais_encontrados:
+                print(f"\n\tNome: {animais[0][1]} \t\tID:{animais[0][0]}")
+
+            return animais_encontrados
+    
+    elif pergunta == "3":
+        animais_encontrados = []
+        
+        for animal in animais:
+            if animal[6] == "neutro":
+                animais_encontrados.append(animal)
+
+        if len(animais_encontrados) == 0:
+            print("\nInfelizmente não temos nenhum animal com essas características no momento!")
+            return False
+
+        elif len(animais_encontrados) == 1:
+            print("\nEncontramos um animal que combina com as características informadas!")
+            print(f"\n\tNome: {animais[0][1]} \t\tID:{animais[0][0]}")                    
+            return animais_encontrados
+        
+        else:
+            print("\nEncontramos animais que combinam com as características informadas!")
+
+            for animal in animais_encontrados:
+                print(f"\n\tNome: {animais[0][1]} \t\tID:{animais[0][0]}")
+
+            return animais_encontrados
+    
+    else:
+        if len(animais) == 0:
+            print("\nInfelizmente não temos nenhum animal com essas características no momento!")
+            return False
+
+        elif len(animais) == 1:
+            print("\nEncontramos um animal que combina com as características informadas!")
+            print(f"\n\tNome: {animais[0][1]} \t\tID:{animais[0][0]}")                    
+            return animais
+        
+        else:
+            print("\nEncontramos animais que combinam com as características informadas!")
+
+            for animal in animais:
+                print(f"\n\tNome: {animais[0][1]} \t\tID:{animais[0][0]}")
+
+            return animais
+        

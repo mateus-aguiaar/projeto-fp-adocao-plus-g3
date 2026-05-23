@@ -1,2 +1,5 @@
-id_animal,nome,raca,idade,estado_saude,comportamento,data_chegada
-23052026141729,Mel,Lulu da pomerânia,8,Ótimo estado de saúde,Calmo,2026-05-23
+id_animal,nome,especie,raca,idade,estado_saude,comportamento,data_chegada
+22052026110107,Mateus,cachorro,golden,10,Ótimo estado,agitado,2026-05-22
+22052026110205,Mel,cachorro,yorkshire,8,Bem de saúde,calmo,2026-05-22
+22052026143516,Mesmonome,cachorro,maltês,10,Bem,agitado,2026-05-22
+22052026143541,Mesmonome,cachorro,maltês,10,Bem,calmo,2026-05-22
