@@ -298,11 +298,12 @@ def deletar_animal(escolha):
             with open("data/animais.csv", "r", newline="", encoding="utf-8") as arquivo:
                 reader = csv.reader(arquivo)
                 todas_linhas = list(reader)
+            
 
             animais_nome_verificacao = []
 
             for linha in todas_linhas:
-                if nome_verificacao == linha[1]:
+                if nome_verificacao == linha[1].lower():
                     animais_nome_verificacao.append([linha[0], linha[1], linha[2],
                                                      linha[3], linha[4], linha[5], linha[6]])
 
