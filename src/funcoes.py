@@ -6,7 +6,8 @@ import random
 def cadastro_animal(escolha):
     if escolha == 1:      
         nome_animal = input("\nDigite o nome do animal: ").capitalize()
-        especie_animal = input("\nDigite a especie do animal: ").lower()
+        escolha_especie = input(ui.MENU_ESPECIE_ANIMAL)
+        especie_animal = escolha_especie_animal(escolha_especie)
         raca_animal = input("\nDigite a raça do animal: ").lower()
         idade_animal = int(input("\nDigite a idade do animal: "))
         estado_saude_animal = input("\nInforme o estado de saúde do animal: ").capitalize()
@@ -574,4 +575,4 @@ def deletar_animal(escolha):
                 print("\nDeleção cancelada.")
 
         except FileNotFoundError:
-            print("\033[1;31mNenhum animal cadastrado\033[m")
+            print("\033[1;31mNenhum animal cadastrado\033[m")
