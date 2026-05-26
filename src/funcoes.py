@@ -263,7 +263,6 @@ def atualizar_animal(escolha):
             reader = csv.reader(arquivo)
 
             animais_nome_verificacao = []
-
             todas_linhas = []
 
             for linha in reader:
