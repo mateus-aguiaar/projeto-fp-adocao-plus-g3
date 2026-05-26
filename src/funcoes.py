@@ -207,11 +207,12 @@ def editar_info(animal_escolhido):
     while True:
         print(f"\nInformações de {animal_escolhido[1]}:")
         print(f"\n[1] Nome: {animal_escolhido[1]}")
-        print(f"[2] Raça: {animal_escolhido[3]}")
-        print(f"[3] Idade: {animal_escolhido[4]}")
-        print(f"[4] Estado de saúde: {animal_escolhido[5]}")
-        print(f"[5] Comportamento: {animal_escolhido[6]}")
-        print(f"[6] Data de chegada: {animal_escolhido[7]}")
+        print(f"[2] Espécie: {animal_escolhido[2]}")
+        print(f"[3] Raça: {animal_escolhido[3]}")
+        print(f"[4] Idade: {animal_escolhido[4]}")
+        print(f"[5] Estado de saúde: {animal_escolhido[5]}")
+        print(f"[6] Comportamento: {animal_escolhido[6]}")
+        print(f"[7] Data de chegada: {animal_escolhido[7]}")
 
         info_quer_editar = int(input("---> Quero editar: "))
 
@@ -221,22 +222,26 @@ def editar_info(animal_escolhido):
             novo_nome = input("Novo nome: ")
             animal_escolhido[1] = novo_nome
         elif info_quer_editar == 2:
+            print(f"\nEspécie atual: {animal_escolhido[2]}")
+            nova_especie = input("Nova espécie: ")
+            animal_escolhido[2] = nova_especie
+        elif info_quer_editar == 3:
             print(f"\nRaça atual: {animal_escolhido[3]}")
             nova_raca = input("Nova raça: ")
             animal_escolhido[3] = nova_raca
-        elif info_quer_editar == 3:
+        elif info_quer_editar == 4:
             print(f"\nIdade atual: {animal_escolhido[4]}")
             nova_idade = input("Nova idade: ")
             animal_escolhido[4] = nova_idade
-        elif info_quer_editar == 4:
+        elif info_quer_editar == 5:
             print(f"\nEstado de saúde atual: {animal_escolhido[5]}")
             novo_estado_de_saude = input("Novo estado de saúde: ")
             animal_escolhido[5] = novo_estado_de_saude
-        elif info_quer_editar == 5:
+        elif info_quer_editar == 6:
             print(f"\nComportamento atual: {animal_escolhido[6]}")
             novo_comportamento = input("Novo comportamento: ")
             animal_escolhido[6] = novo_comportamento
-        elif info_quer_editar == 6:
+        elif info_quer_editar == 7:
             print(f"\nData de chegada atual: {animal_escolhido[7]}")
             nova_data_de_chegada = input("Nova data de chegada: ")
             animal_escolhido[7] = nova_data_de_chegada
@@ -252,6 +257,7 @@ def editar_info(animal_escolhido):
 def atualizar_animal(escolha):
     if escolha == 3:
         nome_verificacao = input("\nNome do animal: ").capitalize()
+        os.system("cls")
 
         with open ("data/animais.csv", "r", newline="", encoding="utf-8") as arquivo:
             reader = csv.reader(arquivo)
