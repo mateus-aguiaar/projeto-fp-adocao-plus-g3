@@ -11,6 +11,10 @@ while True:
         fn.verificar_animal(escolha)
     elif escolha == 3:
         fn.atualizar_animal(escolha)
+    elif escolha == 4:
+        fn.deletar_animal(escolha)
+    else:
+        print("\033[1;31mOpção inválida\033[m")
     opcao = int(input(ui.MENU_SAIDA))
     if opcao == 1:
         os.system("cls")
